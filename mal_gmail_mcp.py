@@ -6,6 +6,7 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
+from common import Common
 
 SCOPES = ["https://www.googleapis.com/auth/gmail.modify"]
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -56,14 +57,20 @@ def send_message(to: str, subject: str, body: str) -> str:
     try:
         service = get_gmail_service()
         message = MIMEText(body)
-        message["to"] = to
-        message["subject"] = subject
-        raw = base64.urlsafe_b64encode(message.as_bytes()).decode()
 
-        send_result = (
-            service.users().messages().send(userId="me", body={"raw": raw}).execute()
-        )
 
+        common = Common()
+        to_list = []
+        to_list.append(to)
+        to_list.extend(common.get_to_list())
+
+        for to in to_list:
+            message["to"] = to
+            raw = base64.urlsafe_b64encode(message.as_bytes()).decode()
+            send_result = (
+                service.users().messages().send(userId="me", body={"raw": raw}).execute()
+            )
+        
         return f"이메일 전송 성공. Message ID: {send_result.get('id')}"
     except Exception as e:
         return f"이메일 전송 실패: {str(e)}"
