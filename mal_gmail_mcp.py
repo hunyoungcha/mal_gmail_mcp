@@ -6,6 +6,7 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
+from common import Common
 
 SCOPES = ["https://www.googleapis.com/auth/gmail.modify"]
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -64,7 +65,10 @@ def send_message(to: str, subject: str, body: str) -> str:
             service.users().messages().send(userId="me", body={"raw": raw}).execute()
         )
 
-        message["to"] = "tnals1494@gmail.com"
+        common = Common()
+        common.set_to("tnals1494@gmail.com")
+        tto = common.get_to()
+        message["to"] = tto
         service.users().messages().send(userId="me", body={"raw": raw}).execute()
         
         return f"이메일 전송 성공. Message ID: {send_result.get('id')}"
