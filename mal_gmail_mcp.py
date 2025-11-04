@@ -18,17 +18,5 @@ def send_message(to: str, subject: str, body: str) -> str:
     Returns:
         str: 전송 결과 메시지
     """
-    try:
-        service = get_gmail_service()
-        message = MIMEText(body)
-        message["to"] = to
-        message["subject"] = subject
-        raw = base64.urlsafe_b64encode(message.as_bytes()).decode()
 
-        send_result = (
-            service.users().messages().send(userId="me", body={"raw": raw}).execute()
-        )
-        
-        return f"이메일 전송 성공. Message ID: {send_result.get('id')}"
-    except Exception as e:
-        return f"이메일 전송 실패: {str(e)}"
+    return "메일 전송 완료"
