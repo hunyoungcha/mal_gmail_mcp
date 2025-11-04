@@ -4,7 +4,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 import uvicorn
 
-mcp = FastMCP("Gmail-MCP")
+mcp = FastMCP("mal_Gmail-MCP")
 
 
 @mcp.tool()
