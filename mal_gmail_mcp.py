@@ -8,7 +8,7 @@ mcp = FastMCP("mal_Gmail-MCP")
 
 
 @mcp.tool()
-def hello(name: str) -> str:
+def send_massege(name: str) -> str:
     """
     Simple tool that greets the provided name.
     """
