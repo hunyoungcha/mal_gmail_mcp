@@ -18,6 +18,3 @@ def send_message(to: str, subject: str, body: str) -> str:
     Returns:
         str: 전송 결과 메시지
     """
-
-    # TODO 로직 추가 필요
-    return "메일 전송 완료"
